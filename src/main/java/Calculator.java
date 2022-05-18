@@ -40,10 +40,14 @@ public class Calculator {
     }
 
     Double divide(Double firstOperand, Double secondOperand) {
-        if (secondOperand == 0) {
-            System.out.println("Null division!");
+        try {
+            if (secondOperand == 0) {
+                throw new ArithmeticException();
+            }
+            result = firstOperand / secondOperand;
+        } catch (ArithmeticException e) {
+            System.out.println("Zero division!!!");
         }
-        result = firstOperand / secondOperand;
         return result;
     }
 }
