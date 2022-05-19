@@ -7,17 +7,29 @@ public class CalculatorDemo {
     static Double secondValue;
     static Integer operation;
 
+    static Logger logger;
+
 
     public static void main(String[] args) {
-        enterValues();
-        Calculator calc = new Calculator(firstValue,secondValue,operation);
-        if (calc.result != null){
-            System.out.println("Result is: " + calc.result);
+        logger = new TextFileLogger("C:\\NewJavaProjects\\SimpleConsoleCalculatorJUnit\\CalculatorLogger.txt");
+        try {
+            enterValues();
+            Calculator calc = new Calculator(firstValue, secondValue, operation, logger);
+            if (calc.result != null) {
+                System.out.println("Result is: " + calc.result);
+            }
+        } catch (Exception e) {
+            try {
+                logger.log(e.getMessage());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            System.out.println(e.getMessage());
         }
 
     }
 
-    static void enterValues(){
+    static void enterValues() {
         System.out.println("Enter first value:");
 
         try {
@@ -40,17 +52,13 @@ public class CalculatorDemo {
                 case 47 -> operation = buffer;//"/"
                 default -> System.out.println("Incorrect operation");
             }
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Incorrect value");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
-
-
-
-
 
 
 }
