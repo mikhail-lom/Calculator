@@ -1,22 +1,26 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import file_controller.TypeOS;
+import math_operations.CalculatorOperation;
+import math_operations.SumOperation;
 
 public class Calculator {
     //class parameters
     public Double result = null;
     public Integer operation = null;
+    public Double firstOperand;
+    public Double secondOperand;
 
     private Logger logger;
+    private String filePath;
     //class constructors
 
-    Calculator() {
 
+
+    Calculator( Logger log, String filePath) {
+        logger = log;
+        this.filePath = filePath;
     }
 
-    Calculator(Double fO, Double sO, Integer op, Logger log) {
-        logger = log;
-        operation = op;
+    void init(Double fO, Double sO, Integer operation){
         switch (operation) {
             case 43 -> add(fO, sO);
             case 45 -> subtract(fO, sO);
@@ -24,55 +28,40 @@ public class Calculator {
             case 47 -> divide(fO, sO);
             default -> System.out.println("Incompatible operation");
         }
+
+        CalculatorOperation operationI = new SumOperation();
     }
 
     //class methods
     Double add(Double firstOperand, Double secondOperand) {
         result = firstOperand + secondOperand;
-        try {
-            logger.log(result.toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String filePath = logger.getFilePath(this.filePath, TypeOS.LINUX);
+        logger.log(result.toString());
         return result;
     }
 
     Double subtract(Double firstOperand, Double secondOperand) {
         result = firstOperand - secondOperand;
-        try {
-            logger.log(result.toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        logger.log(result.toString());
         return result;
     }
 
 
     Double multiplicate(Double firstOperand, Double secondOperand) {
         result = firstOperand * secondOperand;
-        try {
-            logger.log(result.toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        logger.log(result.toString());
         return result;
     }
 
     Double divide(Double firstOperand, Double secondOperand) {
         if (secondOperand == 0) {
-            try {
-                logger.log("Error: second operand = " + secondOperand.toString());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            logger.log("Error: second operand = " + secondOperand.toString());
             throw new ArithmeticException("Zero division!!!");
         }
         result = firstOperand / secondOperand;
-        try {
-            logger.log(result.toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        logger.log(result.toString());
         return result;
     }
+
+
 }

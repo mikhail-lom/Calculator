@@ -14,16 +14,13 @@ public class CalculatorDemo {
         logger = new TextFileLogger("C:\\NewJavaProjects\\SimpleConsoleCalculatorJUnit\\CalculatorLogger.txt");
         try {
             enterValues();
-            Calculator calc = new Calculator(firstValue, secondValue, operation, logger);
+            Calculator calc = new Calculator(logger , "testPathOne");
+            calc.init(firstValue, secondValue, operation);
             if (calc.result != null) {
                 System.out.println("Result is: " + calc.result);
             }
         } catch (Exception e) {
-            try {
-                logger.log(e.getMessage());
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            logger.log(e.getMessage());
             System.out.println(e.getMessage());
         }
 
